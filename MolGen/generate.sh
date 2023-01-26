@@ -1,0 +1,19 @@
+deepspeed --include localhost:0,1 generate_ds.py --dist 1 \
+                                            --gpu 1 \
+                                            --batch_size 5  \
+                                            --exp_name generate \
+                                            --exp_id plogp \
+                                            --return_num 200    \
+                                            --max_len 100   \
+                                            --min_len 20    \
+                                            --top_k 30  \
+                                            --top_p 1   \
+                                            --beam 1300  \
+                                            --process 'generate'  \
+                                            --generate_mode 'topk'  \
+                                            --checkpoint_path '../moldata/checkpoint/syn_plogp_model.pkl' \
+                                            --input_path '../moldata/finetune/plogp.csv'  \
+                                            --generate_path '../moldata/generate/optimize_syn_plogp.csv' \
+                                            --property 'plogp' \
+                                            --deepspeed \
+                                            --deepspeed_config generate_config.json \

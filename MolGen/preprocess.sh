@@ -1,0 +1,20 @@
+deepspeed --include localhost:0,1 generate_ds.py --dist 1 \
+                                            --gpu 1 \
+                                            --batch_size 30  \
+                                            --exp_name generate \
+                                            --exp_id qed \
+                                            --return_num 30    \
+                                            --max_len 100   \
+                                            --min_len 20    \
+                                            --top_k 30  \
+                                            --top_p 1   \
+                                            --beam 30  \
+                                            --process 'preprocess'  \
+                                            --generate_mode 'topk'  \
+                                            --checkpoint_path '../moldata/checkpoint/molgen.pkl' \
+                                            --input_path '../moldata/finetune/zinc250k.csv'  \
+                                            --output_path '../moldata/output/candidates.csv' \
+                                            --finetune_path '../moldata/output/zinc250k_qed.csv' \
+                                            --property 'qed' \
+                                            --deepspeed \
+                                            --deepspeed_config generate_config.json \

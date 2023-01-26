@@ -1,0 +1,16 @@
+deepspeed --include localhost:0,1 finetune.py --dist 1 \
+                                            --gpu 1 \
+                                            --batch_size 4 \
+                                            --exp_name finetune \
+                                            --exp_id qed \
+                                            --mle_weight 1  \
+                                            --rank_weight 3 \
+                                            --epoch 1 \
+                                            --checkpoint_path '../moldata/checkpoint/molgen.pkl' \
+                                            --finetune_path '../moldata/output/zinc250k_qed.csv'    \
+                                            --deepspeed \
+                                            --deepspeed_config finetune_config.json \
+                                            --weight_decay 0.0001 \
+                                            --max_length 100 \
+                                            --lr 1e-4 \
+                                            --eval_step 20 \
