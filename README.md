@@ -1,6 +1,6 @@
 # MolGen
 
-Code for the paper "[Molecular Language Model as Multi-task Generator]()".
+Code for the paper "[Molecular Language Model as Multi-task Generator](https://arxiv.org/pdf/2301.11259.pdf)".
 
 
 # Requirements
