@@ -45,7 +45,7 @@ moldata
         bash preprocess.sh
     ```
 
-    - Then do multi-task prefix tuning in combine with the self-feedback paradigm. The fine-tuned model will be stored in folder ``checkpoint``.
+    - Then do multi-task prefix tuning in combine with the self-feedback paradigm. The fine-tuned model will be stored in the folder ``checkpoint``.
 
 
     ```shell
