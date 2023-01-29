@@ -12,9 +12,9 @@ pip install -r requirements.txt
 
 # Resource Download
     
-You can download the pre-trained model via this [link](https://drive.google.com/file/d/1ViU5BEgdkKmZ0mlVVQMrHFCS6LwhT79B/view?usp=sharing)
+You can download the pre-trained model via this [link](https://drive.google.com/file/d/1ViU5BEgdkKmZ0mlVVQMrHFCS6LwhT79B/view?usp=sharing).
 
-Moreover, the dataset used for downstream tasks can be found [here](https://github.com/zjunlp/MolGen/tree/main/moldata/finetune)
+Moreover, the dataset used for downstream tasks can be found [here](https://github.com/zjunlp/MolGen/tree/main/moldata/finetune).
 
 The expected structure of files is:
 
