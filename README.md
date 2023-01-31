@@ -1,6 +1,7 @@
 # MolGen
 
 Code for the paper "[Molecular Language Model as Multi-task Generator](https://arxiv.org/pdf/2301.11259.pdf)".
+- ❗NOTE: We provide a NLP for science paper-list at [https://github.com/zjunlp/NLP4Science_Papers](https://github.com/zjunlp/NLP4Science_Papers).
 
 
 # Requirements
@@ -62,5 +63,16 @@ moldata
     bash generate.sh
     ```
     
-    
+# Citation
+
+If you use or extend our work, please cite the paper as follows:
+
+```bibtex
+@article{fang2023molecular,
+  title={Molecular Language Model as Multi-task Generator},
+  author={Fang, Yin and Zhang, Ningyu and Chen, Zhuo and Fan, Xiaohui and Chen, Huajun},
+  journal={arXiv preprint arXiv:2301.11259},
+  year={2023}
+}
+```
     
