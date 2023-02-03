@@ -15,7 +15,7 @@ pip install -r requirements.txt
 
 # Resource Download
     
-You can download the pre-trained model via this [link](https://drive.google.com/file/d/1ViU5BEgdkKmZ0mlVVQMrHFCS6LwhT79B/view?usp=sharing).
+You can download the pre-trained model via this [link1](https://drive.google.com/file/d/1ViU5BEgdkKmZ0mlVVQMrHFCS6LwhT79B/view?usp=sharing), and fine-tuned model via this [link2](https://drive.google.com/drive/folders/1AFU28y6H9mbe4ALq9yD_LgtDZ1HjjnVT?usp=sharing).
 
 Moreover, the dataset used for downstream tasks can be found [here](https://github.com/zjunlp/MolGen/tree/main/moldata/finetune).
 
@@ -25,6 +25,10 @@ The expected structure of files is:
 moldata
 ├── checkpoint 
 │   ├── molgen.pkl          # pre-trained model
+│   ├── syn_qed_model.pkl   # fine-tuned model for QED optimization on synthetic data
+│   ├── syn_plogp_model.pkl # fine-tuned model for p-logP optimization on synthetic data
+│   ├── np_qed_model.pkl    # fine-tuned model for QED optimization on natural product data
+│   ├── np_plogp_model.pkl  # fine-tuned model for p-logP optimization on natural product data
 ├── finetune
 │   ├── np_test.csv         # nature product test data
 │   ├── np_train.csv        # nature product train data
