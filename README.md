@@ -24,21 +24,21 @@ The expected structure of files is:
 ```
 moldata
 ├── checkpoint 
-│   ├── molgen.pkl          # pre-trained model
-│   ├── syn_qed_model.pkl   # fine-tuned model for QED optimization on synthetic data
-│   ├── syn_plogp_model.pkl # fine-tuned model for p-logP optimization on synthetic data
-│   ├── np_qed_model.pkl    # fine-tuned model for QED optimization on natural product data
-│   ├── np_plogp_model.pkl  # fine-tuned model for p-logP optimization on natural product data
+│   ├── molgen.pkl              # pre-trained model
+│   ├── syn_qed_model.pkl       # fine-tuned model for QED optimization on synthetic data
+│   ├── syn_plogp_model.pkl     # fine-tuned model for p-logP optimization on synthetic data
+│   ├── np_qed_model.pkl        # fine-tuned model for QED optimization on natural product data
+│   ├── np_plogp_model.pkl      # fine-tuned model for p-logP optimization on natural product data
 ├── finetune
-│   ├── np_test.csv         # nature product test data
-│   ├── np_train.csv        # nature product train data
-│   ├── plogp_test.csv      # synthetic test data for plogp optimization
-│   ├── qed_test.csv        # synthetic test data for plogp optimization
-│   └── zinc250k.csv        # synthetic train data
-├── generate                # generate molecules
-├── output                  # molecule candidates
+│   ├── np_test.csv             # nature product test data
+│   ├── np_train.csv            # nature product train data
+│   ├── plogp_test.csv          # synthetic test data for plogp optimization
+│   ├── qed_test.csv            # synthetic test data for plogp optimization
+│   └── zinc250k.csv            # synthetic train data
+├── generate                    # generate molecules
+├── output                      # molecule candidates
 └── vocab_list
-    └── zinc.npy            # SELFIES alphabet
+    └── zinc.npy                # SELFIES alphabet
 ``` 
 
 # How to run
