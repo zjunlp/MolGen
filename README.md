@@ -2,7 +2,9 @@
 
 Code for the paper "[Molecular Language Model as Multi-task Generator](https://arxiv.org/pdf/2301.11259.pdf)".
 - ❗NOTE: We provide a NLP for science paper-list at [https://github.com/zjunlp/NLP4Science_Papers](https://github.com/zjunlp/NLP4Science_Papers).
+- ❗NOTE: We release our pre-trained model at [huggingface](https://huggingface.co/zjunlp/MolGen).
 
+<div align=center><img src="molgen.png" width="80%" height="80%" /></div>
 
 # Requirements
 
