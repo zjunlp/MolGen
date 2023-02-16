@@ -1,4 +1,5 @@
 # MolGen
+[![Pytorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?e&logo=PyTorch&logoColor=white)](https://pytorch.org/)
 
 Code for the paper "[Molecular Language Model as Multi-task Generator](https://arxiv.org/pdf/2301.11259.pdf)".
 - ❗NOTE: We provide a NLP for science paper-list at [https://github.com/zjunlp/NLP4Science_Papers](https://github.com/zjunlp/NLP4Science_Papers).
@@ -6,14 +7,14 @@ Code for the paper "[Molecular Language Model as Multi-task Generator](https://a
 
 <div align=center><img src="molgen.png" width="80%" height="80%" /></div>
 
-# Requirements
+# 📕 Requirements
 
 To run the codes, you need to install the requirements:
 ```
 pip install -r requirements.txt
 ```
 
-# Resource Download
+# 📚 Resource Download
     
 You can download the pre-trained model via this [link1](https://drive.google.com/file/d/1ViU5BEgdkKmZ0mlVVQMrHFCS6LwhT79B/view?usp=sharing), and the fine-tuned models via this [link2](https://drive.google.com/drive/folders/1AFU28y6H9mbe4ALq9yD_LgtDZ1HjjnVT?usp=sharing).
 
@@ -41,7 +42,7 @@ moldata
     └── zinc.npy                # SELFIES alphabet
 ``` 
 
-# How to run
+# 🚀 How to run
 
 
 + ## Fine-tune
