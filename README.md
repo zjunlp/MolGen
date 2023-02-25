@@ -5,8 +5,8 @@
 
 Code for the paper "[Molecular Language Model as Multi-task Generator](https://arxiv.org/pdf/2301.11259.pdf)".
 - ❗NOTE: We provide a NLP for science paper-list at [https://github.com/zjunlp/NLP4Science_Papers](https://github.com/zjunlp/NLP4Science_Papers).
-- ❗NOTE: We release our pre-trained and fine-tuned model on **Hugging Face** at [MolGen-large](https://huggingface.co/zjunlp/MolGen-large) and [MolGen-large-opt](https://huggingface.co/zjunlp/MolGen-large-opt).
-- ❗NOTE: We provide a demo on **Hugging Face** at [Space](https://huggingface.co/spaces/zjunlp/MolGen).
+- ❗NOTE: We release our pre-trained and fine-tuned model on 🤗**Hugging Face** at [MolGen-large](https://huggingface.co/zjunlp/MolGen-large) and [MolGen-large-opt](https://huggingface.co/zjunlp/MolGen-large-opt).
+- ❗NOTE: We provide a demo on 🤗**Hugging Face** at [Space](https://huggingface.co/spaces/zjunlp/MolGen).
 
 <div align=center><img src="molgen.png" width="80%" height="80%" /></div>
 
