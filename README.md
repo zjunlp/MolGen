@@ -8,7 +8,7 @@ Code for the paper "[Domain-Agnostic Molecular Generation with Self-feedback](ht
 - ❗NOTE: We release our pre-trained and fine-tuned model on 🤗 **Hugging Face** at [MolGen-large](https://huggingface.co/zjunlp/MolGen-large) and [MolGen-large-opt](https://huggingface.co/zjunlp/MolGen-large-opt).
 - ❗NOTE: We provide a demo on 🤗 **Hugging Face** at [Space](https://huggingface.co/spaces/zjunlp/MolGen).
 
-<div align=center><img src="molgen.png" width="80%" height="80%" /></div>
+<div align=center><img src="molgen.png" width="100%" height="100%" /></div>
 
 # 📕 Requirements
 
@@ -57,7 +57,7 @@ moldata
         bash preprocess.sh
     ```
 
-    - Then do multi-task prefix tuning in combine with the self-feedback paradigm. The fine-tuned model will be stored in the folder ``checkpoint``.
+    - Then utilize the self-feedback paradigm. The fine-tuned model will be stored in the folder ``checkpoint``.
 
 
     ```shell
