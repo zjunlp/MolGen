@@ -4,11 +4,18 @@
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/zjunlp/MolGen/blob/main/LICENSE)
 
 Code for the paper "[Domain-Agnostic Molecular Generation with Self-feedback](https://arxiv.org/pdf/2301.11259.pdf)".
-- ❗NOTE: We provide a NLP for science paper-list at [https://github.com/zjunlp/NLP4Science_Papers](https://github.com/zjunlp/NLP4Science_Papers).
-- ❗NOTE: We release our pre-trained and fine-tuned model on 🤗 **Hugging Face** at [MolGen-large](https://huggingface.co/zjunlp/MolGen-large) and [MolGen-large-opt](https://huggingface.co/zjunlp/MolGen-large-opt).
-- ❗NOTE: We provide a demo on 🤗 **Hugging Face** at [Space](https://huggingface.co/spaces/zjunlp/MolGen).
 
 <div align=center><img src="molgen.png" width="100%" height="100%" /></div>
+
+
+# 🔔News 
+
+- **2023-6 We release [Mol-Instructions](https://github.com/zjunlp/Mol-Instructions) is a large-Scale biomolecules instruction dataset for large language models.**
+- **2023-4 We provide a NLP for science paper-list at [https://github.com/zjunlp/NLP4Science_Papers](https://github.com/zjunlp/NLP4Science_Papers).**
+- **2023-3 We release our pre-trained and fine-tuned model on 🤗 **Hugging Face** at [MolGen-large](https://huggingface.co/zjunlp/MolGen-large) and [MolGen-large-opt](https://huggingface.co/zjunlp/MolGen-large-opt).**
+- **2023-2 We provide a demo on 🤗 **Hugging Face** at [Space](https://huggingface.co/spaces/zjunlp/MolGen).**
+
+
 
 # 📕 Requirements
 
