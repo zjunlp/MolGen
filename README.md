@@ -8,7 +8,7 @@ Code for the paper "[Domain-Agnostic Molecular Generation with Self-feedback](ht
 <div align=center><img src="molgen.png" width="100%" height="100%" /></div>
 
 
-# 🔔News 
+# 🔔 News 
 
 - **2023-6 We release [Mol-Instructions](https://github.com/zjunlp/Mol-Instructions), a large-scale biomolecules instruction dataset for large language models.**
 - **2023-4 We provide a NLP for science paper-list at [https://github.com/zjunlp/NLP4Science_Papers](https://github.com/zjunlp/NLP4Science_Papers).**
