@@ -16,8 +16,6 @@ import pandas as pd
 import selfies as sf
 from pandarallel import pandarallel
 import numpy as np
-import selfies as sf
-import warnings
 warnings.filterwarnings('ignore')
 from src.distributed_utils import init_distributed_mode
 import torch.distributed as dist
