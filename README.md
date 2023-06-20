@@ -86,7 +86,7 @@ If you use or extend our work, please cite the paper as follows:
 
 ```bibtex
 @article{fang2023molecular,
-  title={Domain-Agnostic Molecular Generation with Self-feedback},
+  title={Molecular Language Model as Multi-task Generator},
   author={Fang, Yin and Zhang, Ningyu and Chen, Zhuo and Fan, Xiaohui and Chen, Huajun},
   journal={arXiv preprint arXiv:2301.11259},
   year={2023}
