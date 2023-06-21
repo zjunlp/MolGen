@@ -10,6 +10,7 @@ Code for the paper "[Domain-Agnostic Molecular Generation with Self-feedback](ht
 
 # 🔔 News 
 
+- **2023-6 We open-source [KnowLM](https://github.com/zjunlp/KnowLM), a knowledgeable LLM framework with pre-training and instruction fine-tuning code (supports multi-machine multi-GPU setup).**
 - **2023-6 We release [Mol-Instructions](https://github.com/zjunlp/Mol-Instructions), a large-scale biomolecules instruction dataset for large language models.**
 - **2023-4 We provide a NLP for science paper-list at [https://github.com/zjunlp/NLP4Science_Papers](https://github.com/zjunlp/NLP4Science_Papers).**
 - **2023-3 We release our pre-trained and fine-tuned model on 🤗 **Hugging Face** at [MolGen-large](https://huggingface.co/zjunlp/MolGen-large) and [MolGen-large-opt](https://huggingface.co/zjunlp/MolGen-large-opt).**
