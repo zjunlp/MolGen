@@ -4,7 +4,7 @@ deepspeed --include localhost:0,1 train_ds.py --dist 1 \
                                 --batch_size 150 \
                                 --exp_name pretrain_stage1 \
                                 --exp_id 000 \
-                                --pretrain_path "../moldata/zinc/zinc0.csv" \
+                                --pretrain_path $YOUR_PRETRAIN_DATA_PATH$ \
                                 --epoch 100 \
                                 --workers 4 \
                                 --accumulation_steps 8 \
