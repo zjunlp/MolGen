@@ -9,7 +9,7 @@ deepspeed --include localhost:0,1 finetune.py --dist 1 \
                                             --checkpoint_path '../moldata/checkpoint/molgen.pkl' \
                                             --finetune_path '../moldata/output/zinc250k_qed.csv'    \
                                             --deepspeed \
-                                            --deepspeed_config finetune_config.json \
+                                            --deepspeed_config config.json \
                                             --weight_decay 0.0001 \
                                             --max_length 100 \
                                             --lr 1e-4 \

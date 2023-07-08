@@ -1,0 +1,32 @@
+deepspeed --include localhost:0,1 train_ds.py --dist 1 \
+                                --rank 0 \
+                                --gpu 1 \
+                                --batch_size 150 \
+                                --exp_name pretrain_stage1 \
+                                --exp_id 000 \
+                                --pretrain_path "../moldata/zinc/zinc0.csv" \
+                                --epoch 100 \
+                                --workers 4 \
+                                --accumulation_steps 8 \
+                                --lr 3e-3 \
+                                --max_length 95 \
+                                --deepspeed \
+                                --deepspeed_config pretrain_config.json \
+                                --weight_decay 0.01 \
+
+deepspeed --include localhost:0,1 train_prefix.py --dist 1 \
+                                --rank 0 \
+                                --gpu 1 \
+                                --batch_size 20 \
+                                --exp_name pretrain_stage2 \
+                                --exp_id 000 \
+                                --pretrain_path $YOUR_DATA_PATH$ \
+                                --checkpoint_path '../moldata/checkpoint/molgen.pkl' \
+                                --epoch 100 \
+                                --workers 4 \
+                                --accumulation_steps 8 \
+                                --lr 1e-5 \
+                                --deepspeed \
+                                --deepspeed_config config.json \
+                                --weight_decay 0.0001 \
+                                --eval_step 20 \
