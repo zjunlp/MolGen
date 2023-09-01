@@ -28,7 +28,7 @@ class cfg():
         parser.add_argument("--data_name", default="zinc/zinc0", type=str, help="Experiment path")
         parser.add_argument("--pretrain_path", default="../moldata/finetune/zinc0.csv", type=str, help="Pretrain path")
         parser.add_argument("--finetune_path", default="../moldata/output/results.csv", type=str, help="Finetune path")
-        parser.add_argument("--generate_path", default="/newdisk2/fangyin/moldata/generate/results.csv", type=str, help="Generate path")
+        parser.add_argument("--generate_path", default="../moldata/generate/results.csv", type=str, help="Generate path")
         parser.add_argument("--model_name", default="BART", type=str, choices=["BART"], help="model name")
         parser.add_argument("--model_name_save", default="", type=str, choices=["BART"], help="model name")
         
@@ -89,10 +89,10 @@ class cfg():
         parser.add_argument('--valid_path', type=str, help="valid data path")
         parser.add_argument('--prefix_sequence_length', type=int, default=5, help="prefix sequence length")
         parser.add_argument('--mid_dim', type=int, default=512, help="middle dimensional for prefix")
+        
+        parser.add_argument('--protein_path', type=str, help="protein path for molecule docking")
 
         
-        # ------------ 并行训练 ------------
-        # 是否并行
         parser.add_argument('--rank', type=int, default=0, help='rank to dist')
         parser.add_argument('--dist', type=int, default=0, help='whether to dist')
 
