@@ -18,8 +18,9 @@ from pandarallel import pandarallel
 warnings.filterwarnings('ignore')
 from src.distributed_utils import init_distributed_mode
 import torch.distributed as dist
-from src.utils import qed, plogp, sim, sf_decode, sf_encode
+from src.utils import qed, plogp, sim, sf_decode, sf_encode, smiles_to_affinity
 import moses
+import pdb
 
 class Runner:
     def __init__(self, args, writer=None, logger=None, rank=0):
@@ -35,6 +36,7 @@ class Runner:
         self.model = BartForConditionalGeneration(BartConfig())
         # data loading
         self.finetune_path = args.finetune_path
+        self.protein_path = args.protein_path
         self.data_init()
         set_seed(args.random_seed)
 
@@ -116,7 +118,9 @@ class Runner:
                 _tqdm.update(1)
         input_smiles = self.input_data['smiles'].tolist()
         input = [i for i in input_smiles for r in range(self.args.return_num)]
-        if self.args.property == 'plogp':
+        
+        
+        if self.args.property in ['plogp', 'binding_affinity']:
             input_prop = self.input_data[self.args.property].tolist()
             input_props = [i for i in input_prop for r in range(self.args.return_num)]
             pairs = {"start_smiles": input, f"input_{self.args.property}": input_props, "candidates": candidates, "candidate_smiles": candidate_smiles}
@@ -139,10 +143,13 @@ class Runner:
         elif self.args.property == 'qed':
             data['output_qed'] = data['candidate_smiles'].parallel_apply(qed)
             data['input_qed'] = data['start_smiles'].parallel_apply(qed)
+        elif self.args.property == 'binding_affinity':
+            cand_smi = data['candidate_smiles'].tolist()
+            dc = smiles_to_affinity(cand_smi, '../MolGen/AutoDock-GPU/bin/autodock_gpu_128wi', self.protein_path, num_devices=1, path=self.logger_path)
+            data['output_binding_affinity'] = dc
+        data.to_csv(self.args.generate_path, index=None)
 
-        data.to_csv(self.args.generate_path)
-
-        data['sim'] = data.parallel_apply(lambda x: sim(x['start_smiles'],x['candidate_smiles']),axis=1)
+        # data['sim'] = data.parallel_apply(lambda x: sim(x['start_smiles'],x['candidate_smiles']),axis=1)
         if self.args.property == 'plogp':
             data['improve'] = data[f'output_{self.args.property}'] - data[f'input_{self.args.property}']
             data['improve'][data[f'output_{self.args.property}']==-100]=0
@@ -187,7 +194,25 @@ class Runner:
             if rank==0:
                 self.logger.info('top 3 max qed smiles:')
                 self.logger.info(max_qed_smiles)
+                
+        elif self.args.property == 'binding_affinity':
+            df = data[f'output_{self.args.property}'].groupby(data['start_smiles'])
+            max_ba = df.min()
+            if rank==0:
+                self.logger.info('top 3 max binding affinity:')
+            max_bas = sorted(max_ba, reverse=False)[0:3]
+            if rank==0:
+                self.logger.info(max_bas)
 
+            max_ba_smiles = []
+            for max_ba in max_bas:
+                smiles = data['candidate_smiles'][data[f'output_{self.args.property}']==max_ba].tolist()
+                max_ba_smiles.extend(smiles)
+            if rank==0:
+                self.logger.info('top 3 max binding affinity smiles:')
+                self.logger.info(max_ba_smiles)
+                
+                
     def generate_candidate_selfies(self):
         self.model_engine, _, _, self.scheduler = deepspeed.initialize(self.args, model=self.model,
                                                         model_parameters=self.model.parameters())
@@ -249,15 +274,28 @@ class Runner:
             candidate_data['plogp'] = candidate_data['candidate_smiles'].parallel_apply(plogp)
         elif self.args.property == 'qed':
             candidate_data['qed'] = candidate_data['candidate_smiles'].parallel_apply(qed)
+        elif self.args.property == 'binding_affinity':
+            cand_smi = candidate_data['candidate_smiles'].tolist()       
+            dc = smiles_to_affinity(cand_smi, '../MolGen/AutoDock-GPU/bin/autodock_gpu_128wi', self.protein_path, num_devices=1, path=self.logger_path)
+            neg_dc = [-i for i in dc]
+            candidate_data['binding_affinity'] = neg_dc
         
-        property_list = sorted(set(candidate_data[self.args.property]))
-        min_prop = property_list[1]
-        cands = candidate_data['candidates'].tolist()
-        candidates = [cands[i:i+self.args.return_num] for i in range(0,len(cands), self.args.return_num)]
-        props = candidate_data[self.args.property].tolist()
-        props = [min_prop-2 if prop == -100 else prop for prop in props]
-        properties = [props[i:i+self.args.return_num] for i in range(0,len(props), self.args.return_num)]
-
+        if self.args.property == 'binding_affinity':
+            property_list = sorted(set(candidate_data[self.args.property]))
+            cands = candidate_data['candidates'].tolist()
+            candidates = [cands[i:i+self.args.return_num] for i in range(0,len(cands), self.args.return_num)]
+            props = candidate_data[self.args.property].tolist()
+            properties = [props[i:i+self.args.return_num] for i in range(0,len(props), self.args.return_num)]
+        
+        else:
+            property_list = sorted(set(candidate_data[self.args.property]))
+            min_prop = property_list[1]
+            cands = candidate_data['candidates'].tolist()
+            candidates = [cands[i:i+self.args.return_num] for i in range(0,len(cands), self.args.return_num)]
+            props = candidate_data[self.args.property].tolist()
+            props = [min_prop-2 if prop == -100 else prop for prop in props]
+            properties = [props[i:i+self.args.return_num] for i in range(0,len(props), self.args.return_num)]
+        
         all_candidates = []
         for i in range(len(candidates)):
             pairs = []
@@ -267,7 +305,6 @@ class Runner:
                 pair = (cand, prop)
                 pairs.append(pair)
             all_candidates.append(pairs)
-            
         output = {
             "input": source_data['selfies'].tolist(),
             "candidates": all_candidates,
