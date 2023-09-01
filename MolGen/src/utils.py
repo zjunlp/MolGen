@@ -8,9 +8,17 @@ from rdkit import Chem
 from rdkit.Chem import AllChem
 from rdkit import DataStructs
 from rdkit.Chem import Descriptors
-from score_modules.SA_Score import sascorer
+# from score_modules.SA_Score import sascorer
 import selfies as sf
 from rdkit.Chem import QED
+import os
+import subprocess
+from tqdm import tqdm
+import time
+import math
+import json
+import pandas as pd
+import pdb
 
 def set_optim(opt, model_list, freeze_part=[], accumulation_step=None):
     named_parameters = []
@@ -273,4 +281,55 @@ def sf_encode(smile):
         return encode
     except sf.EncoderError:
         return '' 
+
+def smiles_to_affinity(smiles, autodock, protein_file, num_devices, path):
+    if not os.path.exists(f'{path}/ligands'):
+        os.mkdir(f'{path}/ligands')
+    if not os.path.exists(f'{path}/outs'):
+        os.mkdir(f'{path}/outs')
+    # subprocess.run('rm core.*', shell=True, stderr=subprocess.DEVNULL)
+    subprocess.run(f'rm {path}/outs/*.xml', shell=True, stderr=subprocess.DEVNULL)
+    subprocess.run(f'rm {path}/outs/*.dlg', shell=True, stderr=subprocess.DEVNULL)
+    subprocess.run(f'rm -rf {path}/ligands/*', shell=True, stderr=subprocess.DEVNULL)
+    for device in range(num_devices):
+        os.mkdir(f'{path}/ligands/{device}')
+    device = 0
+    for i, hot in enumerate(tqdm(smiles, desc='preparing ligands')):
+        subprocess.Popen(f'obabel -:"{smiles[i]}" -O {path}/ligands/{device}/ligand{i}.pdbqt -p 7.4 --partialcharge gasteiger --gen3d', shell=True, stderr=subprocess.DEVNULL)
+        # subprocess.Popen(f'obabel -:"{smiles[i]}" -O ligands/{device}/ligand{i}.pdbqt -p 7.4 --partialcharge gasteiger --gen3d', shell=True)
+        device += 1
+        if device == num_devices:
+            device = 0
+    while True:
+        total = 0
+        for device in range(num_devices):
+            total += len(os.listdir(f'{path}/ligands/{device}'))
+        if total == len(smiles):
+            break
+    
+    time.sleep(1)
+    print('running autodock..')
+    if len(smiles) == 1:
+        subprocess.run(f'{autodock} -M {protein_file} -s 0 -L {path}/ligands/0/ligand0.pdbqt -N {path}/outs/ligand0', shell=True, stdout=subprocess.DEVNULL)
+    else:
+        ps = []
+        for device in range(num_devices):
+            ps.append(subprocess.Popen(f'{autodock} -M {protein_file} -s 0 -B {path}/ligands/{device}/ligand*.pdbqt -N ../../outs/ -D {device + 1}', shell=True))
+        stop = False
+        while not stop: 
+            for p in ps:
+                stop = True
+                if p.poll() is None:
+                    time.sleep(1)
+                    stop = False
+    affins = [0 for _ in range(len(smiles))]
+    for file in tqdm(os.listdir(f'{path}/outs'), desc='extracting binding values'):
+        if file.endswith('.dlg') and '0.000   0.000   0.000  0.00  0.00' not in open(f'{path}/outs/{file}').read():
+            affins[int(file.split('ligand')[1].split('.')[0])] = float(subprocess.check_output(f"grep 'RANKING' {path}/outs/{file} | tr -s ' ' | cut -f 5 -d ' ' | head -n 1", shell=True).decode('utf-8').strip())
+    result = [min(affin, 0) for affin in affins]
+    dc = [delta_g_to_kd(i) for i in result]
+    return dc
+
+def delta_g_to_kd(x):
+    return math.exp(x / (0.00198720425864083 * 298.15))
 
