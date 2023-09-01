@@ -87,7 +87,21 @@ moldata
     cd MolGen
     bash generate.sh
     ```
-    
+
+#  🥽 Experiments
+
++ ## Distribution Learning
+
+<div align=center><img src="dis.png" width="100%" height="100%" /></div>
+
++ ## Targeted Molecule Discovery
+
+<div align=center><img src="target.png" width="100%" height="100%" /></div>
+
++ ## Constrained Molecular Optimization
+
+<div align=center><img src="cons.png" width="100%" height="100%" /></div>
+
 # Citation
 
 If you use or extend our work, please cite the paper as follows:
