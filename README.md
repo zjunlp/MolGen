@@ -97,7 +97,7 @@ moldata
 
 #  🥽 Experiments
 
-We conduct experiments on well-known benchmarks to confirm MolGen's optimization capabilities, encompassing penalized logP, QED, and molecular docking properties. For detailed experimental settings and analysis, please refer to our [paper](https://arxiv.org/pdf/2301.11259.pdf).
+We conduct experiments on well-known benchmarks to confirm MolGen's optimization capabilities, encompassing penalized logP, QED, and molecular docking properties. For detailed experimental settings and analysis, please refer to our [paper](https://arxiv.org/abs/2301.11259).
 
 + ## Distribution Learning
 
