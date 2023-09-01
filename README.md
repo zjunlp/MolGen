@@ -21,9 +21,15 @@ Code for the paper "[Domain-Agnostic Molecular Generation with Self-feedback](ht
 
 # 📕 Requirements
 
-To run the codes, you need to install the requirements:
+To run the codes, You can configure dependencies by restoring our environment:
 ```
-pip install -r requirements.txt
+conda env create -f MolGen/environment.yml -n $Your_env_name$
+```
+
+and then：
+
+```
+conda activate $Your_env_name$
 ```
 
 # 📚 Resource Download
