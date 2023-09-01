@@ -1,12 +1,19 @@
-# MolGen
+
+
+
+<h1 align="center">  ⚗️ MolGen  </h1>
+<h3 align="center"> Domain-Agnostic Molecular Generation with Self-feedback </h3>
+
+<p align="center">
+  📃 <a href="https://arxiv.org/abs/2301.11259" target="_blank">Paper</a> • 🤗 <a href="https://huggingface.co/zjunlp/MolGen-large" target="_blank">Model</a>  • 🔬 <a href="https://huggingface.co/spaces/zjunlp/MolGen" target="_blank">Space</a> <br>
+</p>
+
 [![Pytorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?e&logo=PyTorch&logoColor=white)](https://pytorch.org/)
 ![](https://img.shields.io/badge/version-1.0.1-blue)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/zjunlp/MolGen/blob/main/LICENSE)
 
-Code for the paper "[Domain-Agnostic Molecular Generation with Self-feedback](https://arxiv.org/pdf/2301.11259.pdf)".
 
 <div align=center><img src="molgen.png" width="100%" height="100%" /></div>
-
 
 # 🔔 News 
 
@@ -90,17 +97,19 @@ moldata
 
 #  🥽 Experiments
 
+We conduct experiments on well-known benchmarks to confirm MolGen's optimization capabilities, encompassing penalized logP, QED, and molecular docking properties. For detailed experimental settings and analysis, please refer to our [paper](https://arxiv.org/pdf/2301.11259.pdf).
+
 + ## Distribution Learning
 
-<div align=center><img src="dis.png" width="100%" height="100%" /></div>
+<div align=center><img src="fig/dis.png" width="95%" height="100%" /></div>
 
 + ## Targeted Molecule Discovery
 
-<div align=center><img src="target.png" width="100%" height="100%" /></div>
+<div align=center><img src="fig/target.png" width="85%" height="100%" /></div>
 
 + ## Constrained Molecular Optimization
 
-<div align=center><img src="cons.png" width="100%" height="100%" /></div>
+<div align=center><img src="fig/cons.png" width="41%" height="100%" /></div>
 
 # Citation
 
