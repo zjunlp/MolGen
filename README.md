@@ -17,6 +17,7 @@
 
 # 🔔 News 
 
+- **`2023-10` We open-source [MolGen-7b](https://huggingface.co/zjunlp/MolGen-7b), which now supports de novo molecule generation!** 
 - **`2023-6` We open-source [KnowLM](https://github.com/zjunlp/KnowLM), a knowledgeable LLM framework with pre-training and instruction fine-tuning code (supports multi-machine multi-GPU setup).**
 - **`2023-6` We release [Mol-Instructions](https://github.com/zjunlp/Mol-Instructions), a large-scale biomolecule instruction dataset for large language models.**
 - **`2023-5` We propose [Knowledge graph-enhanced molecular contrAstive learning with fuNctional prOmpt (KANO)](https://github.com/HICAI-ZJU/KANO) on `Nature Machine Intelligence`, exploiting fundamental domain knowledge in both pre-training and fine-tuning.**
@@ -99,17 +100,20 @@ moldata
 
 We conduct experiments on well-known benchmarks to confirm MolGen's optimization capabilities, encompassing penalized logP, QED, and molecular docking properties. For detailed experimental settings and analysis, please refer to our [paper](https://arxiv.org/abs/2301.11259).
 
-+ ## Distribution Learning
++ ## MolGen captures real-word molecular distributions
 
-<div align=center><img src="fig/dis.png" width="95%" height="100%" /></div>
+<img width="950" alt="image" src="https://github.com/zjunlp/MolGen/assets/61076726/c32bf106-d43c-4d1d-af48-8caed03305bc">
 
-+ ## Targeted Molecule Discovery
 
-<div align=center><img src="fig/target.png" width="85%" height="100%" /></div>
++ ## MolGen mitigates molecular hallucinations
+### Targeted molecule discovery
+<img width="480" alt="image" src="https://github.com/zjunlp/MolGen/assets/61076726/51533e08-e465-44c8-9e78-858775b59b4f">
+<img width="595" alt="image" src="https://github.com/zjunlp/MolGen/assets/61076726/6f17a630-88e4-46f6-9cb1-9c3637a264fc">
+<img width="376" alt="image" src="https://github.com/zjunlp/MolGen/assets/61076726/4b934314-5f23-4046-a771-60cdfe9b572d">
 
-+ ## Constrained Molecular Optimization
+### Constrained molecular optimization
+<img width="350" alt="image" src="https://github.com/zjunlp/MolGen/assets/61076726/bca038cc-637a-41fd-9b53-48ac67c4f182">
 
-<div align=center><img src="fig/cons.png" width="41%" height="100%" /></div>
 
 # Citation
 
