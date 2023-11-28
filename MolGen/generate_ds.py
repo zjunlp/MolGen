@@ -53,6 +53,46 @@ class Runner:
         self.tokenizer.add_tokens('<mask>', special_tokens=True)
         self.model.resize_token_embeddings(len(self.tokenizer))
         self.model.load_state_dict(torch.load(self.args.checkpoint_path, map_location='cpu'),strict=False)
+
+        self.config = self.model.config
+        self.match_n_layer = self.config.decoder_layers
+        self.match_n_head = self.config.decoder_attention_heads
+        self.n_embd = self.config.d_model
+        assert self.n_embd % self.match_n_head == 0
+        self.match_n_embd = self.n_embd // self.match_n_head # huggingface BART's dim of kv need to be calculated
+     
+        # Prefix related.
+        self.preseqlen = self.args.prefix_sequence_length
+        self.mid_dim = self.args.mid_dim
+        self.input_tokens = torch.arange(self.preseqlen).long().cuda()
+        
+        self.wte = nn.Embedding(self.preseqlen, self.n_embd).cuda()
+        # self.wte.load_state_dict(torch.load('$wte_path$', map_location='cpu'),strict=False)
+        self.control_trans = nn.Sequential(
+            nn.Linear(self.n_embd, self.mid_dim),
+            nn.Tanh(),
+            nn.Linear(self.mid_dim, self.match_n_layer * 2 * self.match_n_head * self.match_n_embd),
+        ).cuda()
+        # self.control_trans.load_state_dict(torch.load('$control_trans_path$', map_location='cpu'),strict=False)
+
+        self.wte_enc = nn.Embedding(self.preseqlen, self.n_embd).cuda()
+        # self.wte_enc.load_state_dict(torch.load('$wte_enc_path$', map_location='cpu'),strict=False)
+        self.control_trans_enc = nn.Sequential(
+            nn.Linear(self.n_embd, self.mid_dim),
+            nn.Tanh(),
+            nn.Linear(self.mid_dim, self.match_n_layer * 2 * self.match_n_head * self.match_n_embd),
+        ).cuda()
+        # self.control_trans_enc.load_state_dict(torch.load('control_trans_enc_path', map_location='cpu'),strict=False)
+
+        self.wte_dec = nn.Embedding(self.preseqlen, self.n_embd).cuda()
+        # self.wte_dec.load_state_dict(torch.load('$wte_dec_path$', map_location='cpu'),strict=False)
+        self.control_trans_dec = nn.Sequential(
+            nn.Linear(self.n_embd, self.mid_dim),
+            nn.Tanh(),
+            nn.Linear(self.mid_dim, self.match_n_layer * 2 * self.match_n_head * self.match_n_embd),
+        ).cuda()
+        # self.control_trans_dec.load_state_dict(torch.load('$control_trans_dec_path$', map_location='cpu'),strict=False)
+        
         
         if self.rank == 0:
             self.logger.info("Loading downstream dataset...")
@@ -72,6 +112,83 @@ class Runner:
         input_selfies = self.input_data['selfies'].tolist()
         self.input_dataloader = DataLoader(input_selfies, batch_size=self.args.batch_size,shuffle=False)
 
+    def get_prompt(self, bsz=None, sample_size=1):
+        old_bsz = bsz
+        bsz = bsz * sample_size
+        input_tokens = self.input_tokens.unsqueeze(0).expand(bsz, -1)
+        temp_control = self.wte(input_tokens)
+        past_key_values = self.control_trans(temp_control)  # bsz, seqlen, layer*emb
+
+
+        bsz, seqlen, _ = past_key_values.shape
+        past_key_values = past_key_values.view(
+            bsz, seqlen, self.match_n_layer * 2, self.match_n_head, self.match_n_embd
+        )
+        past_key_values = past_key_values.permute([2, 0, 3, 1, 4]).split(2)
+
+        # Cross prefix
+        temp_control_dec = self.wte_dec(input_tokens)
+        past_key_values_dec = self.control_trans_dec(
+            temp_control_dec
+        )  # bsz, seqlen, layer*emb
+
+        bsz, seqlen, _ = past_key_values_dec.shape
+        past_key_values_dec = past_key_values_dec.view(
+            bsz, seqlen, self.match_n_layer * 2, self.match_n_head, self.match_n_embd
+        )
+        past_key_values_dec = past_key_values_dec.permute([2, 0, 3, 1, 4]).split(2)
+
+        # Encoder prefix
+        input_tokens_enc = (
+            self.input_tokens.unsqueeze(0).expand(old_bsz, -1)
+        )
+        temp_control_enc = self.wte_enc(input_tokens_enc)
+        past_key_values_enc = self.control_trans_enc(
+            temp_control_enc
+        )  # bsz, seqlen, layer*emb
+
+
+        bsz_enc, seqlen, _ = past_key_values_enc.shape
+        past_key_values_enc = past_key_values_enc.view(
+            bsz_enc,
+            seqlen,
+            self.match_n_layer * 2,
+            self.match_n_head,
+            self.match_n_embd,
+        )
+        past_key_values_enc = past_key_values_enc.permute([2, 0, 3, 1, 4]).split(2)
+
+        result = []
+        for i, key_val in enumerate(past_key_values):
+            temp = dict()
+            temp["decoder_prompt"] = {
+                "prev_key": key_val[0].contiguous(),
+                "prev_value": key_val[1].contiguous(),
+                "prev_key_padding_mask": torch.zeros(bsz, seqlen)
+                    .to(key_val.device)
+                    .bool()
+                # bsz, preseqlen
+            }
+            key_val_dec = past_key_values_dec[i]
+            temp["cross_attention_prompt"] = {
+                "prev_key": key_val_dec[0].contiguous(),
+                "prev_value": key_val_dec[1].contiguous(),
+                "prev_key_padding_mask": torch.zeros(bsz, seqlen)
+                    .to(key_val_dec.device)
+                    .bool(),
+            }
+            key_val_enc = past_key_values_enc[i]
+            temp["encoder_prompt"] = {
+                "prev_key": key_val_enc[0].contiguous(),
+                "prev_value": key_val_enc[1].contiguous(),
+                "prev_key_padding_mask": torch.zeros(bsz_enc, seqlen)
+                    .to(key_val_enc.device)
+                    .bool(),
+            }
+            result.append(temp)
+
+        return result
+        
     def generate_molecules(self):
         self.model_engine, _, _, self.scheduler = deepspeed.initialize(self.args, model=self.model,
                                                         model_parameters=self.model.parameters())
@@ -84,6 +201,7 @@ class Runner:
             for i, batch in enumerate(self.input_dataloader):
                 _tqdm.set_description(f'Generate | step [{i}/{len(self.input_dataloader)}]')
                 batch_encode = self.tokenizer.batch_encode_plus(batch, max_length=self.args.max_len, return_tensors="pt", pad_to_max_length=True, truncation=True)
+                past_prompt = self.get_prompt(bsz=self.args.batch_size, sample_size=self.args.return_num)
                 if self.args.generate_mode == 'beam':
                     molecules = self.model_engine.generate(
                         input_ids=batch_encode["input_ids"].cuda(),
@@ -96,7 +214,7 @@ class Runner:
                         min_length=self.args.min_len,
                         length_penalty=self.args.length_penalty,
                         early_stopping=True,
-                        past_prompt=None
+                        past_prompt=past_prompt
                     )
                 elif self.args.generate_mode == 'topk':
                     molecules = self.model_engine.generate(
@@ -109,7 +227,7 @@ class Runner:
                         top_p=self.args.top_p,
                         temperature = self.args.temperature,
                         num_return_sequences=self.args.return_num,
-                        past_prompt=None
+                        past_prompt=past_prompt
                     )
                 cand = [self.tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=True).replace(" ","") for g in molecules]
                 cand_smiles = [sf.decoder(selfies) for selfies in cand]
@@ -224,6 +342,7 @@ class Runner:
             for i, batch in enumerate(self.input_dataloader):
                 _tqdm.set_description(f'Generate | step [{i}/{len(self.input_dataloader)}]')
                 batch_encode = self.tokenizer.batch_encode_plus(batch, max_length=self.args.max_len, return_tensors="pt", pad_to_max_length=True, truncation=True)
+                past_prompt = self.get_prompt(bsz=self.args.batch_size, sample_size=self.args.return_num)
                 if self.args.generate_mode == 'beam':
                     molecules = self.model_engine.generate(
                         input_ids=batch_encode["input_ids"].cuda(),
@@ -236,7 +355,7 @@ class Runner:
                         min_length=self.args.min_len,
                         length_penalty=self.args.length_penalty,
                         early_stopping=True,
-                        past_prompt=None
+                        past_prompt=past_prompt
                     )
                 elif self.args.generate_mode == 'topk':
                     molecules = self.model_engine.generate(
@@ -248,7 +367,7 @@ class Runner:
                         top_k=self.args.top_k,
                         top_p=self.args.top_p,
                         num_return_sequences=self.args.return_num,
-                        past_prompt=None
+                        past_prompt=past_prompt
                     )
                 cand = [self.tokenizer.decode(g, skip_special_tokens=True, clean_up_tokenization_spaces=True).replace(" ","") for g in molecules]
                 candidates.extend(cand)
