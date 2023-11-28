@@ -18,7 +18,6 @@ import warnings
 warnings.filterwarnings('ignore')
 from model import BartTokenizer, BartModel, BartForConditionalGeneration, BartConfig
 from transformers.trainer_pt_utils import get_parameter_names
-# 并行相关
 from src.distributed_utils import init_distributed_mode, dist_pdb, is_main_process
 import torch.distributed as dist
 
