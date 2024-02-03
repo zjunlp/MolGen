@@ -17,7 +17,8 @@
 
 # 🔔 News 
 
-- **`2024-1` Accepted by ICLR 2024.**
+- **`2024-1` Our paper [Domain-Agnostic Molecular Generation with Chemical Feedback](https://github.com/zjunlp/MolGen) is accepted by ICLR 2024.**
+- **`2024-1` Our paper [Mol-Instructions: A Large-Scale Biomolecular Instruction Dataset for Large Language Models](https://github.com/zjunlp/Mol-Instructions) is accepted by ICLR 2024.**
 - **`2023-10` We open-source [MolGen-7b](https://huggingface.co/zjunlp/MolGen-7b), which now supports de novo molecule generation!** 
 - **`2023-6` We open-source [KnowLM](https://github.com/zjunlp/KnowLM), a knowledgeable LLM framework with pre-training and instruction fine-tuning code (supports multi-machine multi-GPU setup).**
 - **`2023-6` We release [Mol-Instructions](https://github.com/zjunlp/Mol-Instructions), a large-scale biomolecule instruction dataset for large language models.**
