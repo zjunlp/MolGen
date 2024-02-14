@@ -17,6 +17,7 @@
 
 # 🔔 News 
 
+- **`2024-2` We've released [ChatCell](https://huggingface.co/papers/2402.08303), a new paradigm that leverages natural language to make single-cell analysis more accessible and intuitive. Please visit our [homepage](https://www.zjukg.org/project/ChatCell) and [Github page](https://github.com/zjunlp/ChatCell) for more information.**
 - **`2024-1` Our paper [Domain-Agnostic Molecular Generation with Chemical Feedback](https://github.com/zjunlp/MolGen) is accepted by ICLR 2024.**
 - **`2024-1` Our paper [Mol-Instructions: A Large-Scale Biomolecular Instruction Dataset for Large Language Models](https://github.com/zjunlp/Mol-Instructions) is accepted by ICLR 2024.**
 - **`2023-10` We open-source [MolGen-7b](https://huggingface.co/zjunlp/MolGen-7b), which now supports de novo molecule generation!** 
