@@ -124,11 +124,16 @@ We conduct experiments on well-known benchmarks to confirm MolGen's optimization
 If you use or extend our work, please cite the paper as follows:
 
 ```bibtex
-@article{fang2023molecular,
-  title={Molecular Language Model as Multi-task Generator},
-  author={Fang, Yin and Zhang, Ningyu and Chen, Zhuo and Fan, Xiaohui and Chen, Huajun},
-  journal={arXiv preprint arXiv:2301.11259},
-  year={2023}
+@article{DBLP:journals/corr/abs-2301-11259,
+  author       = {Yin Fang and
+                  Ningyu Zhang and
+                  Zhuo Chen and
+                  Xiaohui Fan and
+                  Huajun Chen},
+  title        = {Domain-Agnostic Molecular Generation with Self-feedback},
+  journal      = {CoRR},
+  volume       = {abs/2301.11259},
+  year         = {2023}
 }
 ```
     
