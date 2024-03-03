@@ -124,16 +124,17 @@ We conduct experiments on well-known benchmarks to confirm MolGen's optimization
 If you use or extend our work, please cite the paper as follows:
 
 ```bibtex
-@article{DBLP:journals/corr/abs-2301-11259,
+@article{fang2023domain,
   author       = {Yin Fang and
                   Ningyu Zhang and
                   Zhuo Chen and
                   Xiaohui Fan and
                   Huajun Chen},
   title        = {Domain-Agnostic Molecular Generation with Self-feedback},
-  journal      = {CoRR},
-  volume       = {abs/2301.11259},
-  year         = {2023}
+  booktitle    = {{ICLR}},
+  publisher    = {OpenReview.net},
+  year         = {2024},
+  url          = {https://openreview.net/pdf?id=9rPyHyjfwP}
 }
 ```
     
