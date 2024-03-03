@@ -111,8 +111,11 @@ We conduct experiments on well-known benchmarks to confirm MolGen's optimization
 
 + ## MolGen mitigates molecular hallucinations
 ### Targeted molecule discovery
+
 <img width="480" alt="image" src="https://github.com/zjunlp/MolGen/assets/61076726/51533e08-e465-44c8-9e78-858775b59b4f">
+
 <img width="595" alt="image" src="https://github.com/zjunlp/MolGen/assets/61076726/6f17a630-88e4-46f6-9cb1-9c3637a264fc">
+
 <img width="376" alt="image" src="https://github.com/zjunlp/MolGen/assets/61076726/4b934314-5f23-4046-a771-60cdfe9b572d">
 
 ### Constrained molecular optimization
