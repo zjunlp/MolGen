@@ -124,7 +124,7 @@ We conduct experiments on well-known benchmarks to confirm MolGen's optimization
 If you use or extend our work, please cite the paper as follows:
 
 ```bibtex
-@article{fang2023domain,
+@inproceedings{fang2023domain,
   author       = {Yin Fang and
                   Ningyu Zhang and
                   Zhuo Chen and
