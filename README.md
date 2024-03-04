@@ -133,7 +133,7 @@ If you use or extend our work, please cite the paper as follows:
                   Zhuo Chen and
                   Xiaohui Fan and
                   Huajun Chen},
-  title        = {Domain-Agnostic Molecular Generation with Self-feedback},
+  title        = {Domain-Agnostic Molecular Generation with Chemical feedback},
   booktitle    = {{ICLR}},
   publisher    = {OpenReview.net},
   year         = {2024},
