@@ -2,7 +2,7 @@
 
 
 <h1 align="center">  ⚗️ MolGen  </h1>
-<h3 align="center"> Domain-Agnostic Molecular Generation with Self-feedback </h3>
+<h3 align="center"> Domain-Agnostic Molecular Generation with Chemical Feedback </h3>
 
 <p align="center">
   📃 <a href="https://arxiv.org/abs/2301.11259" target="_blank">Paper</a> • 🤗 <a href="https://huggingface.co/zjunlp/MolGen-large" target="_blank">Model</a>  • 🔬 <a href="https://huggingface.co/spaces/zjunlp/MolGen" target="_blank">Space</a> <br>
