@@ -140,4 +140,5 @@ If you use or extend our work, please cite the paper as follows:
   url          = {https://openreview.net/pdf?id=9rPyHyjfwP}
 }
 ```
-    
+
+![Star History Chart](https://api.star-history.com/svg?repos=zjunlp/MolGen&type=Date)
