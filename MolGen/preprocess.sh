@@ -12,7 +12,7 @@ deepspeed --include localhost:0,1 generate_ds.py --dist 1 \
                                             --process 'preprocess'  \
                                             --generate_mode 'topk'  \
                                             --checkpoint_path '../moldata/checkpoint/molgen.pkl' \
-                                            --input_path '../moldata/finetune/zinc250k.csv'  \
+                                            --input_path '../moldata/pretrain/zinc250k.csv'  \
                                             --output_path '../moldata/output/candidates.csv' \
                                             --finetune_path '../moldata/output/zinc250k_qed.csv' \
                                             --property 'qed' \
