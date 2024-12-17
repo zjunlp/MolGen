@@ -48,7 +48,7 @@ conda activate $Your_env_name$
 
 You can download the pre-trained and fine-tuned models via Huggingface: [MolGen-large](https://huggingface.co/zjunlp/MolGen-large) and [MolGen-large-opt](https://huggingface.co/zjunlp/MolGen-large-opt).
 
-You can download the molgen.pkl model using the following link: https://drive.google.com/drive/folders/1Eelk_RX1I26qLa9c4SZq6Tv-AAbDXgrW?usp=sharing
+You can also download the model using the following link: https://drive.google.com/drive/folders/1Eelk_RX1I26qLa9c4SZq6Tv-AAbDXgrW?usp=sharing
 
 Moreover, the dataset used for downstream tasks can be found [here](https://github.com/zjunlp/MolGen/tree/main/moldata/finetune).
 
