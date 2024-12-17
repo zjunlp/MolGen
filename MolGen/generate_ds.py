@@ -1,5 +1,6 @@
 import os
 import torch
+import torch.nn as nn
 from torch.utils.tensorboard import SummaryWriter
 from torch.utils.data import DataLoader
 from datetime import datetime
