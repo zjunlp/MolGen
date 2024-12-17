@@ -34,13 +34,13 @@
 
 To run the codes, You can configure dependencies by restoring our environment:
 ```
-conda env create -f MolGen/environment.yml -n $Your_env_name$
+conda env create -f environment.yaml
 ```
 
 and then：
 
 ```
-conda activate $Your_env_name$
+conda activate my_env
 ```
 
 # 📚 Resource Download
